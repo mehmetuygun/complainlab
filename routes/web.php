@@ -15,6 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function (){
-	echo DB::connection()->getDatabaseName();
-});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
