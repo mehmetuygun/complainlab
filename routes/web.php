@@ -18,3 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::group(['middleware' => ['auth']], function () {
+
+	Route::resource('settings/account', 'Settings\AccountController', ['only' => [
+	    'index', 'show', 'store'
+	]]);
+
+});
