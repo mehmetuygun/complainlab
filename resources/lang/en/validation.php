@@ -115,5 +115,6 @@ return [
     */
 
     'attributes' => [],
+    'check_password' => 'The password did not match with our record.'
 
 ];

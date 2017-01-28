@@ -5,8 +5,8 @@
 	<div class="row">
 		<div class="col-md-4">
 			<div class="list-group">
-  				<a href="#" class="list-group-item active">Account</a>
-			  	<a href="#" class="list-group-item">Password</a>
+  				<a href="{{ url('settings/account') }}" class="list-group-item active">Account</a>
+			  	<a href="{{ url('settings/password') }}" class="list-group-item">Password</a>
 			</div>
 		</div>
 		<div class="col-md-8">

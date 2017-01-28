@@ -25,4 +25,8 @@ Route::group(['middleware' => ['auth']], function () {
 	    'index', 'show', 'store'
 	]]);
 
+	Route::resource('settings/password', 'Settings\PasswordController', ['only' => [
+	    'index', 'show', 'store'
+	]]);
+
 });
