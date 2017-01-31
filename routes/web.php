@@ -29,4 +29,6 @@ Route::group(['middleware' => ['auth']], function () {
 	    'index', 'show', 'store'
 	]]);
 
+	Route::resource('ticket', 'TicketController');
+
 });
