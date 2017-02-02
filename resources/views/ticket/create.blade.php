@@ -46,7 +46,11 @@
 
                             <select id="priority_id" class="form-control" name="priority_id">
                             	@foreach ($prioritys as $priority)
-                            		<option value="{{ $priority->id }}">{{ $priority->name }}</option>
+                                    @if (old('priority_id') && old('priority_id') == $priority->id)
+                                        <option value="{{ $priority->id }}" selected="selected">{{ $priority->name }}</option>
+                            		@else
+                                        <option value="{{ $priority->id }}">{{ $priority->name }}</option>
+                                    @endif
                             	@endforeach
                             </select>
 
@@ -66,7 +70,11 @@
 
                             <select id="status_id" class="form-control" name="status_id">
                             	@foreach ($statuss as $status)
-                            		<option value="{{ $status->id }}">{{ $status->name }}</option>
+                                    @if (old('status_id') && old('status_id') == $status->id)
+                                        <option value="{{ $status->id }}" selected="selected">{{ $status->name }}</option>
+                                    @else
+                            		  <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                    @endif
                             	@endforeach
                             </select>
 
