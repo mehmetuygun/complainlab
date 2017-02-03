@@ -3,16 +3,24 @@
 @section('content')
 <div class="container">
     <div class="panel panel-default">
-        <div class="panel-heading">Ticket <small>Create a new ticket.</small></div>
+        <div class="panel-heading">Ticket <small>Edit a ticket</small></div>
             <div class="panel-body">
-        		<form class="form-horizontal" role="form" method="POST" action="{{ url('/ticket/') }}">
+        		<form class="form-horizontal" role="form" method="POST" action="/ticket/{{ $ticket->id }}">
+                    <input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
+
+                    <div class="form-group">
+                        <label for="id" class="col-md-3 control-label">ID</label>
+                        <div class="col-md-6">
+                            <p class="form-control-static">{{ $ticket->id }}</p>
+                        </div>
+                    </div>
 
                     <div class="form-group{{ $errors->has('subject') ? ' has-error' : '' }}">
                         <label for="subject" class="col-md-3 control-label">Subject</label>
 
                         <div class="col-md-6">
-                            <input id="subject" type="text" class="form-control" name="subject" value="{{ old('subject') ? old('subject') : Auth::user()->subject }}" required autofocus>
+                            <input id="subject" type="text" class="form-control" name="subject" value="{{ old('subject') ? old('subject') : $ticket->subject }}" required autofocus>
 
                             @if ($errors->has('subject'))
                                 <span class="help-block">
@@ -27,7 +35,7 @@
 
                         <div class="col-md-6">
                             <textarea id="description" class="form-control" name="description">
-                            	{{ old('description') ? old('description') : Auth::user()->description }}
+                            	{{ old('description') ? old('description') : $ticket->description }}
                             </textarea>
 
                             @if ($errors->has('description'))
@@ -48,7 +56,9 @@
                             	@foreach ($prioritys as $priority)
                                     @if (old('priority_id') && old('priority_id') == $priority->id)
                                         <option value="{{ $priority->id }}" selected="selected">{{ $priority->name }}</option>
-                            		@else
+                            		@elseif ($ticket->priority->id == $priority->id)
+                                        <option value="{{ $priority->id }}" selected="selected" >{{ $priority->name }}</option>
+                                    @else
                                         <option value="{{ $priority->id }}">{{ $priority->name }}</option>
                                     @endif
                             	@endforeach
@@ -72,8 +82,10 @@
                             	@foreach ($statuss as $status)
                                     @if (old('status_id') && old('status_id') == $status->id)
                                         <option value="{{ $status->id }}" selected="selected">{{ $status->name }}</option>
+                                    @elseif ($ticket->status->id == $status->id)
+                                        <option value="{{ $status->id }}" selected="selected">{{ $status->name }}</option>
                                     @else
-                            		  <option value="{{ $status->id }}">{{ $status->name }}</option>
+                            		    <option value="{{ $status->id }}">{{ $status->name }}</option>
                                     @endif
                             	@endforeach
                             </select>
@@ -89,9 +101,7 @@
 
                     <div class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                            <button type="submit" class="btn btn-primary">
-                                Create
-                            </button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
                             <a href=" {{ URL::previous() }} " class="btn btn-default">Go Back</a>
                         </div>
                     </div>

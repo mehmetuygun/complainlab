@@ -18,7 +18,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return view('ticket/index', ['tickets' => Ticket::all()]);
+        return view('ticket/index', ['tickets' => Ticket::paginate(5)]);
     }
 
     /**
@@ -72,7 +72,9 @@ class TicketController extends Controller
      */
     public function edit($id)
     {
-        return view('welcome');
+        $ticket = Ticket::findOrFail($id);
+
+        return view('ticket/edit', ['ticket' => $ticket, 'statuss' => Status::all(), 'prioritys' => Priority::all()]);
     }
 
     /**
@@ -82,9 +84,20 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateTicketRequest $request, $id)
     {
-        //
+        $ticket = Ticket::findOrFail($id);
+
+        $ticket->subject = $request->subject;
+        $ticket->description = $request->description;
+        $ticket->status_id = $request->status_id;
+        $ticket->priority_id = $request->priority_id;
+
+        $ticket->save();
+
+        return redirect('ticket')
+            ->with('alert_message', 'Your ticket has been updated.')
+            ->with('alert_type', 'success');
     }
 
     /**

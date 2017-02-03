@@ -26,7 +26,8 @@ class CreateTicketRequest extends FormRequest
         return [
             'subject' => 'Required|max:100',
             'description' => 'Required|max:100',
-            'status_id' => 'Required|exists:status,id'
+            'status_id' => 'Required|exists:status,id',
+            'priority_id' => 'Required|exists:priority,id'
         ];
     }
 }
