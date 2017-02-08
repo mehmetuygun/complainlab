@@ -61,7 +61,9 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        //
+        $ticket = Ticket::findOrFail($id);
+
+        return view('ticket/show', ['ticket' => $ticket]);
     }
 
     /**

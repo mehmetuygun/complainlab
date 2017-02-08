@@ -16,15 +16,17 @@
                     <th>Status</th>
                     <th>Priority</th>
                     <th>Created at</th>
+                    <th>Updated at</th>
                     <th>Action</th>
                     @foreach ($tickets as $ticket)
                         <tr>
                             <td>{{ $ticket->id }}</td>
-                            <td>{{ $ticket->subject }}</td>
+                            <td><a href="/ticket/{{ $ticket->id }}">{{ $ticket->subject }}</a> </td>
                             <td>{{ $ticket->user->first_name }} {{ $ticket->user->last_name }}</td>
                             <td>{{ $ticket->status->name }}</td>
                             <td>{{ $ticket->priority->name }}</td>
                             <td>{{ $ticket->created_at }}</td>
+                            <td>{{ $ticket->updated_at }}</td>
                             <td>
                                 <a href="{{ url('ticket').'/'.$ticket->id.'/edit' }}" class="btn btn-default btn-sm" role="button">Edit</a>
                             </td>
