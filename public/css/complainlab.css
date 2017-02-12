@@ -2,3 +2,9 @@
 	text-transform: uppercase;
 	font-weight: bold;
 }
+.buttons-reply {
+	margin-top: 20px;
+}
+.buttons-reply .btn {
+	margin-right: 5px;
+}

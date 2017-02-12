@@ -22,4 +22,9 @@ class Ticket extends Model
     {
     	return $this->hasOne('App\Priority', 'id', 'priority_id');
     }
+
+    public function replies()
+    {
+        return $this->hasMany('App\Reply');
+    }
 }

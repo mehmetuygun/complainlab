@@ -31,4 +31,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::resource('ticket', 'TicketController');
 
+	Route::resource('reply', 'ReplyController', ['only' => [
+	    'store'
+	]]);
+
 });
