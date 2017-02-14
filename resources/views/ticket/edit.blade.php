@@ -5,7 +5,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">Ticket <small>Edit a ticket</small></div>
             <div class="panel-body">
-        		<form class="form-horizontal" role="form" method="POST" action="/ticket/{{ $ticket->id }}">
+        		<form class="form-horizontal" role="form" method="POST" action="/app/ticket/{{ $ticket->id }}">
                     <input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
 

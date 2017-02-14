@@ -15,24 +15,31 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::get('/app', 'HomeController@index');
 
-Route::get('/home', 'HomeController@index');
+Route::group(['prefix' => 'app'], function () {
 
-Route::group(['middleware' => ['auth']], function () {
+	Auth::routes();
 
-	Route::resource('settings/account', 'Settings\AccountController', ['only' => [
-	    'index', 'show', 'store'
-	]]);
 
-	Route::resource('settings/password', 'Settings\PasswordController', ['only' => [
-	    'index', 'show', 'store'
-	]]);
+	Route::group(['middleware' => ['auth']], function () {
 
-	Route::resource('ticket', 'TicketController');
+		Route::resource('settings/account', 'Settings\AccountController', ['only' => [
+		    'index', 'show', 'store'
+		]]);
 
-	Route::resource('reply', 'ReplyController', ['only' => [
-	    'store'
-	]]);
+		Route::resource('settings/password', 'Settings\PasswordController', ['only' => [
+		    'index', 'show', 'store'
+		]]);
+
+		Route::post('ticket/getDataTable', 'TicketController@getDataTable');
+
+		Route::resource('ticket', 'TicketController');
+
+		Route::resource('reply', 'ReplyController', ['only' => [
+		    'store'
+		]]);
+
+	});
 
 });

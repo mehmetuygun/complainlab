@@ -18,7 +18,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return view('ticket/index', ['tickets' => Ticket::paginate(5)]);
+        return view('ticket/index', ['tickets' => Ticket::paginate(10)]);
     }
 
     /**
@@ -48,7 +48,7 @@ class TicketController extends Controller
 
         $ticket->save();
 
-        return redirect('ticket')
+        return redirect('app/ticket')
             ->with('alert_message', 'Your ticket has been created.')
             ->with('alert_type', 'success');
     }
@@ -97,7 +97,7 @@ class TicketController extends Controller
 
         $ticket->save();
 
-        return redirect('ticket')
+        return redirect('app/ticket')
             ->with('alert_message', 'Your ticket has been updated.')
             ->with('alert_type', 'success');
     }
@@ -110,6 +110,47 @@ class TicketController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (Ticket::destroy($id)) {
+            return response()->json([
+                    'status' => 'success',
+                    'id' => $id,
+                    'msg' => 'The '.$id.' ticket is deleted.'
+                ]);
+        }
+
+        return response()->json(['status' => 'error']);
+    }
+
+    /**
+     * Send ticket list for ajax request
+     * @return json array
+     */
+    public function getDataTable(Request $request)
+    {
+        $data = array();
+
+        $tickets = Ticket::orderBy('created_at', 'desc')
+                            ->skip($request->input('start'))
+                            ->take($request->input('length'))
+                            ->get();
+
+        foreach ($tickets as $ticket) {
+            $data[] = [
+                'id' => (string) $ticket->id,
+                'subject' => (string) $ticket->subject,
+                'created_by' => (string) $ticket->user->first_name.' '.$ticket->user->last_name,
+                'status' => (string) $ticket->status->name,
+                'priority' => (string) $ticket->priority->name,
+                'created_at' => (string) $ticket->created_at,
+            ];
+        }
+
+        return response()
+            ->json([
+                "draw" => $request->input('draw'),
+                "recordsTotal"=> Ticket::count(),
+                "recordsFiltered"=> Ticket::count(),
+                'data' => $data
+            ]);
     }
 }

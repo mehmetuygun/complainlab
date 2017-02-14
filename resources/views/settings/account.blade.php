@@ -5,8 +5,8 @@
 	<div class="row">
 		<div class="col-md-4">
 			<div class="list-group">
-  				<a href="{{ url('settings/account') }}" class="list-group-item active">Account</a>
-			  	<a href="{{ url('settings/password') }}" class="list-group-item">Password</a>
+  				<a href="{{ url('app/settings/account') }}" class="list-group-item active">Account</a>
+			  	<a href="{{ url('app/settings/password') }}" class="list-group-item">Password</a>
 			</div>
 		</div>
 		<div class="col-md-8">
@@ -17,7 +17,7 @@
 		        <div class="panel-body">
 				        @include('alert/alert')
 
-		        	    <form class="form-horizontal" role="form" method="POST" action="{{ url('settings/account') }}">
+		        	    <form class="form-horizontal" role="form" method="POST" action="{{ url('app/settings/account') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">

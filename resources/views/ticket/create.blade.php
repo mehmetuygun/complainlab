@@ -5,7 +5,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">Ticket <small>Create a new ticket.</small></div>
             <div class="panel-body">
-        		<form class="form-horizontal" role="form" method="POST" action="{{ url('/ticket/') }}">
+        		<form class="form-horizontal" role="form" method="POST" action="{{ url('/app/ticket/') }}">
                     {{ csrf_field() }}
 
                     <div class="form-group{{ $errors->has('subject') ? ' has-error' : '' }}">
