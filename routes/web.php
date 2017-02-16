@@ -15,10 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/phpmyadmin', function() {
-	require '../phpMyAdmin-4.6.6-all-languages/';
-});
-
 Route::get('/app', 'HomeController@index');
 
 Route::group(['prefix' => 'app'], function () {
