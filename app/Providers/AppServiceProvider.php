@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Validator;
 use Hash;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
         Validator::extend('check_password', function($attribute, $value, $parameters, $validator) {
             return Hash::check($value , $parameters[0]) ;
         });
+
+        Schema::defaultStringLength(191);
     }
 
     /**

@@ -13,28 +13,6 @@
                 <i class="fa fa-clock-o" aria-hidden="true"></i>
                 {{ $ticket->created_at }}
 
-                <div class="btn-toolbar  pull-right" role="toolbar" aria-label="...">
-                    <div class="btn-group" role="group" aria-label="...">
-                        <button class="btn btn-default btn-sm">Reply</button>
-                    </div>
-                    <div class="btn-group" role="group" aria-label="...">
-                        <div class="dropdown">
-                            <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                Action
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                            </ul>
-                        </div>
-                        
-                    </div>
-                </div>
-
             </div>        
             <div class="panel-body">
                 <i class="fa fa-comment-o" aria-hidden="true"></i>
