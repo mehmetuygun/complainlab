@@ -37,8 +37,18 @@ Route::group(['prefix' => 'app', 'middleware' => 'auth'], function () {
 	});
 
 	Route::group(['middleware' => ['permission:view-user']], function () {
-		Route::resource('users', 'UserController');
+		Route::resource('users', 'UserController', ['only' => ['index', 'show', 'edit']]);
 		Route::post('users/getDataTable', 'UserController@getDataTable');
+	});
+
+	Route::group(['middleware' => ['permission:edit-user']], function () {
+		Route::resource('users', 'UserController', ['only' => ['update']]);
+
+	});
+
+	Route::group(['middleware' => ['permission:delete-user']], function () {
+		Route::resource('users', 'UserController', ['only' => ['destroy']]);
+
 	});
 
 	Route::resource('reply', 'ReplyController', ['only' => [

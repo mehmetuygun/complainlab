@@ -95,6 +95,7 @@ class RolePermissionSeeder extends Seeder
         $staff->attachPermission($canAddTickets);
         $staff->attachPermission($canDeleteTickets);
         $staff->attachPermission($canEditTickets);
+        $staff->attachPermission($canViewUser);
 
     }
 }
