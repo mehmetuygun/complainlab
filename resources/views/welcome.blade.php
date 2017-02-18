@@ -62,6 +62,10 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .description {
+                font-size: 28px;
+            }
         </style>
     </head>
     <body>
@@ -79,15 +83,14 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Complainlab
+                    <div class="description">
+                        Complainlab is a ticket management system that provides to manage lists of tickets.
+                    </div>
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="https://github.com/mehmetuygun/complainlab">github.com/mehmetuygun/complainlab</a>
                 </div>
             </div>
         </div>
