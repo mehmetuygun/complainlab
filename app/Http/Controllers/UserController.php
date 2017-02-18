@@ -40,6 +40,7 @@ class UserController extends Controller
     public function store(CreateUserRequest $request)
     {
         $user = new User();
+
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
@@ -47,9 +48,9 @@ class UserController extends Controller
 
         $user->save();
 
-        if (Role::where('id', '=', $request->input('role'))->exists()) {
-            $user->roles()->attach($request->input('role'));
-        }
+        $checked = $request->input('role', []);
+
+        $user->roles()->sync($checked);
 
         return redirect('app/users')
             ->with('alert_message', 'The user has been created.')
@@ -75,21 +76,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $roles = Role::select('name')->get()->toArray();
-
-        $user = User::findOrFail($id);
-
-        if ($user->hasRole($roles)) {
-            $user_role_id = $user->roles()->first()->id;
-        } else {
-            $user_role_id = '';
-        }
+        $roles = Role::all();
 
         return view('user.edit', [
-            'user' => User::findOrFail($id), 
-            'roles' => Role::all(), 
-            'user_role_id' => $user_role_id
+                'user' => User::findOrFail($id), 
+                'roles' => Role::all(), 
             ]);
+
+
     }
 
     /**
@@ -102,13 +96,18 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, $id)
     {
         $user = User::findOrFail($id);
+
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
 
-        if (Role::where('id', '=', $request->input('role'))->exists()) {
-            $user->roles()->attach($request->input('role'));
-        }
+        $checked = $request->input('role', []);
+
+        $user->roles()->sync($checked);
+
+        // if (!$user->hasRole(Role::find($request->input('role'))->first()->name)) {
+        //     $user->roles()->attach($request->input('role'));
+        // }
 
         $user->save();
 
@@ -150,16 +149,16 @@ class UserController extends Controller
                             ->get();
 
         foreach ($users as $user) {
-            $user_roles = $user->roles()->get();
+            $roles = Role::select('name')->get();
 
-            $roles = Role::select('name')->get()->toArray();
+            $role_name = '';
 
-            if ($user->hasRole($roles)) {
-                $role_name = $user_roles->first()->display_name;
-            } else {
-                $role_name = '';
+            foreach ($roles as $role) {
+                if ($user->hasRole((string)$role->name)) {
+                    $role_name .= ' '.$role->name.' |';
+                }
             }
-
+            
             $data[] = [
                 'id' => (string) $user->id,
                 'name' => (string) $user->first_name.' '.$user->last_name,

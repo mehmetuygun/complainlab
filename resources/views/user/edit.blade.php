@@ -54,19 +54,31 @@
                         <label for="role" class="col-md-4 control-label">Role</label>
 
                         <div class="col-md-6">
+                            @foreach ($roles as $role)
+                                @php
+                                    $checked = false
+                                @endphp
+                                @if (old('role') == $role->id || $user->hasRole($role->name))
+                                    @php
+                                        $checked = true
+                                    @endphp
+                                @endif
+                                @if ($checked)
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="role" class="form-control" name="role[]" checked="checked"  value="{{ $role->id }}"> {{ $role->display_name }}
+                                        </label>
+                                    </div>
+                                @else
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="role" class="form-control" name="role[]"  value="{{ $role->id }}"> {{ $role->display_name }}
+                                        </label>
+                                    </div>
+                                @endif
 
-                            <select id="role" class="form-control" name="role">
-                                <option value="">Select a role</option>
-                                @foreach ($roles as $role)
-                                    @if (old('role') && old('role') == $role->id)
-                                        <option value="{{ $role->id }}" selected="selected">{{ $role->display_name }}</option>
-                                    @elseif ($user_role_id == $role->id)
-                                        <option value="{{ $role->id }}" selected="selected">{{ $role->display_name }}</option>
-                                    @else
-                                        <option value="{{ $role->id }}">{{ $role->display_name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
+
+                            @endforeach
 
                             @if ($errors->has('role'))
                                 <span class="help-block">

@@ -50,25 +50,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
-                        <label for="role" class="col-md-4 control-label">Role</label>
-
-                        <div class="col-md-6">
-
-                            <select id="role" class="form-control" name="role">
-                                <option value="">Select a role</option>
-                                @foreach ($roles as $role)
-                                    <option value="{{ $role->id }}">{{ $role->display_name }}</option>
-                                @endforeach
-                            </select>
-
-                            @if ($errors->has('role'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('role') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
 
                     <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                         <label for="password" class="col-md-4 control-label">Password</label>
@@ -89,6 +70,27 @@
 
                         <div class="col-md-6">
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
+                        <label for="role" class="col-md-4 control-label">Role</label>
+
+                        <div class="col-md-6">
+
+                                @foreach ($roles as $role)
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="role" class="form-control" name="role[]" value="{{ $role->id }}"> {{ $role->display_name }}
+                                        </label>
+                                    </div>
+                                @endforeach
+
+                            @if ($errors->has('role'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('role') }}</strong>
+                                </span>
+                            @endif
                         </div>
                     </div>
 
