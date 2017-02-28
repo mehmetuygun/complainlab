@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Status;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $status = Status::where('name', '=', 'Open')->first();
+
+        $open_tickets = $status->ticket()->count();
         return view('home');
     }
 

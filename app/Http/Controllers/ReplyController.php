@@ -19,6 +19,7 @@ class ReplyController extends Controller
     public function index()
     {
         $ticket = Ticket::findOrFail(1);
+        
         return $ticket->toJson();
 
     }

@@ -10,6 +10,6 @@ class Status extends Model
 
     public function ticket()
     {
-    	return $this->belongsTo('App\Ticket', 'status_id', 'id');
+    	return $this->belongsTo('App\Ticket', 'status_id');
     }
 }
