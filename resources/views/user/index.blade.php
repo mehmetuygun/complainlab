@@ -10,7 +10,7 @@
         <div class="panel-body">
             <a href="{{ url('/app/users/create') }}" class="btn btn-primary btn-sm pull-right">Add User</a></h5>
             {{ csrf_field() }}
-            <table class="table table-bordered" style="margin-bottom: 0" id="dataTable">
+            <table class="table" style="margin-bottom: 0" id="dataTable">
                 <thead>
                     <tr>
                         <th>#</th>

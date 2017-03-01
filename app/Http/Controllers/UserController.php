@@ -151,13 +151,15 @@ class UserController extends Controller
         foreach ($users as $user) {
             $roles = Role::select('name')->get();
 
-            $role_name = '';
+            $role_name = ' ';
 
             foreach ($roles as $role) {
                 if ($user->hasRole((string)$role->name)) {
                     $role_name .= ' '.$role->name.' |';
                 }
             }
+
+            $role_name = substr($role_name, 0, -1);
             
             $data[] = [
                 'id' => (string) $user->id,
