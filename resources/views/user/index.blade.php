@@ -5,18 +5,19 @@
     @include('alert/alert')
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
-            User
+            <a href="{{ url('app') }}">Dashboard</a> / User
         </div>
         <div class="panel-body">
-            <a href="{{ url('/app/users/create') }}" class="btn btn-primary btn-sm pull-right">Add User</a></h5>
+            <a href="{{ url('/app/users/create') }}" class="btn btn-success btn-md pull-right"><i class="fa fa-user-plus" aria-hidden="true"></i> Add New User</a></h5>
             {{ csrf_field() }}
-            <table class="table" style="margin-bottom: 0" id="dataTable">
+            <table class="table table-condensed table-striped" style="padding-top: 5px;padding-bottom: 5px;" id="dataTable">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>User</th>
                         <th>Role</th>
                         <th>Created at</th>
+                        <th>Updated at</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -83,7 +84,8 @@
                         { "data": "name" },
                         { "data": "role" },
                         { "data": "created_at" },
-                        {"mRender": function ( data, type, row ) {
+                        { "data": "updated_at" },
+                        { "width": "1%", "mRender": function ( data, type, row ) {
                                 return '<a href="{{ url('app/users') }}/'+row.id+'/edit" class="btn btn-primary btn-xs" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="#1" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal" role="button" id="deleteModal"><i class="fa fa-times" aria-hidden="true"></i></a><input type="hidden" name="id" id="row'+row.id+'">';
                             }
                         }
