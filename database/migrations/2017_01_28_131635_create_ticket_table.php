@@ -20,6 +20,7 @@ class CreateTicketTable extends Migration
             $table->integer('user_id')->nullable();
             $table->integer('status_id')->nullable();
             $table->integer('priority_id')->nullable();
+            $table->integer('assigned_to')->nullable();
             $table->timestamps();
         });
     }
