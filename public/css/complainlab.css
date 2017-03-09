@@ -8,3 +8,14 @@
 .buttons-reply .btn {
 	margin-right: 5px;
 }
+.panel-heading-btn {
+	margin-top: -4px;
+}
+.reply-hr {
+	margin-top: 15px;
+}
+.text-number {
+	font-size: 20px;
+	font-weight: bold;
+	margin: 0;
+}

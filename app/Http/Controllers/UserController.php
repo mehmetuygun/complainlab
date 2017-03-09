@@ -52,7 +52,7 @@ class UserController extends Controller
 
         $user->roles()->sync($checked);
 
-        return redirect('app/users')
+        return redirect('app/user')
             ->with('alert_message', 'The user has been created.')
             ->with('alert_type', 'success');
     }
@@ -111,7 +111,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect('app/users')
+        return redirect('app/user')
             ->with('alert_message', 'The user has been updated.')
             ->with('alert_type', 'success');
     }

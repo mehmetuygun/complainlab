@@ -8,9 +8,9 @@
             <a href="{{ url('app') }}">Dashboard</a> / User
         </div>
         <div class="panel-body">
-            <a href="{{ url('/app/users/create') }}" class="btn btn-success btn-md pull-right"><i class="fa fa-user-plus" aria-hidden="true"></i> Add New User</a></h5>
+            <a href="{{ url('/app/user/create') }}" class="btn btn-success btn-md pull-right"><i class="fa fa-user-plus" aria-hidden="true"></i> Add New User</a></h5>
             {{ csrf_field() }}
-            <table class="table table-condensed table-striped" style="padding-top: 5px;padding-bottom: 5px;" id="dataTable">
+            <table class="table table-condensed table-striped" id="dataTable">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -76,7 +76,7 @@
                     "processing": true,
                     "serverSide": true,
                     "ajax": {
-                        "url": "{{ url('app/users/getDataTable') }}",
+                        "url": "{{ url('app/user/getDataTable') }}",
                         "type": "POST"
                     },
                     "columns": [
@@ -86,7 +86,7 @@
                         { "data": "created_at" },
                         { "data": "updated_at" },
                         { "width": "1%", "mRender": function ( data, type, row ) {
-                                return '<a href="{{ url('app/users') }}/'+row.id+'/edit" class="btn btn-primary btn-xs" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="#1" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal" role="button" id="deleteModal"><i class="fa fa-times" aria-hidden="true"></i></a><input type="hidden" name="id" id="row'+row.id+'">';
+                                return '<a href="{{ url('app/user') }}/'+row.id+'/edit" class="btn btn-primary btn-xs" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="#1" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal" role="button" id="deleteModal"><i class="fa fa-times" aria-hidden="true"></i></a><input type="hidden" name="id" id="row'+row.id+'">';
                             }
                         }
                     ]
@@ -102,7 +102,7 @@
             //delete selected ticket 
             $(document).on('click', '#deleteTicket', function() {
                 $.ajax({
-                    url: '{{ url('/app/users') }}' + '/' + $('#selectedUserId').val(),
+                    url: '{{ url('/app/user') }}' + '/' + $('#selectedUserId').val(),
                     type: 'POST',
                     data: { '_method': 'DELETE' },
                     success: function( msg ) {

@@ -5,17 +5,18 @@
     @include('alert/alert')
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
-            Ticket
+            <a href="{{ url('app') }}">Dashboard</a> / Ticket
+            <a href="{{ url('/app/ticket/create') }}" class="btn btn-success btn-sm panel-heading-btn pull-right"><i class="fa fa-plus" aria-hidden="true"></i> Create New Ticket</a></h5>
         </div>
         <div class="panel-body">
-            <a href="{{ url('/app/ticket/create') }}" class="btn btn-primary btn-sm pull-right">Create Ticket</a></h5>
             {{ csrf_field() }}
-            <table class="table table-bordered" style="margin-bottom: 0" id="dataTable">
+            <table class="table table-condensed table-striped" id="dataTable">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Subject</th>
                         <th>Created by</th>
+                        <th>Assigned to</th>
                         <th>Status</th>
                         <th>Priority</th>
                         <th>Created at</th>
@@ -53,7 +54,6 @@
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ url('css/dataTables.bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
 @endsection
 
 @section('script')
@@ -87,10 +87,11 @@
                             }
                         },
                         { "data": "created_by" },
+                        { "data": "assigned_to" },
                         { "data": "status" },
                         { "data": "priority" },
                         { "data": "created_at" },
-                        {"mRender": function ( data, type, row ) {
+                        { "width": "7%", "mRender": function ( data, type, row ) {
                                 return '<a href="{{ url('app/ticket') }}/'+row.id+'/edit" class="btn btn-primary btn-xs" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="#1" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal" role="button" id="deleteModal"><i class="fa fa-times" aria-hidden="true"></i></a><input type="hidden" name="id" id="row'+row.id+'">';
                             }
                         }

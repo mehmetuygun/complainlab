@@ -23,11 +23,11 @@ Route::group(['prefix' => 'app'], function () {
 
 Route::group(['prefix' => 'app', 'middleware' => 'auth'], function () {
 
-	Route::resource('settings/account', 'Settings\AccountController', ['only' => [
+	Route::resource('account/profile', 'AccountController', ['only' => [
 	    'index', 'show', 'store'
 	]]);
 
-	Route::resource('settings/password', 'Settings\PasswordController', ['only' => [
+	Route::resource('account/password', 'PasswordController', ['only' => [
 	    'index', 'show', 'store'
 	]]);
 
@@ -36,19 +36,28 @@ Route::group(['prefix' => 'app', 'middleware' => 'auth'], function () {
 		Route::resource('ticket', 'TicketController');
 	});
 
-	Route::group(['middleware' => ['permission:view-user']], function () {
-		Route::resource('users', 'UserController', ['only' => ['index', 'show', 'edit', 'create']]);
-		Route::post('users/getDataTable', 'UserController@getDataTable');
+	Route::group(['middleware' => ['permission:add-user']], function () {
+		Route::get('user/create', 'UserController@create');
+		Route::post('user', 'UserController@store');
+	});	
+
+	Route::group(['middleware' => ['permission:delete-tickets']], function () {
+		Route::post('user', 'UserController@destroy');
 	});
 
+	Route::group(['middleware' => ['permission:view-user']], function () {
+		Route::resource('user', 'UserController', ['only' => ['index', 'show', 'edit']]);
+		Route::post('user/getDataTable', 'UserController@getDataTable');
+	});	
+
+
 	Route::group(['middleware' => ['permission:edit-user']], function () {
-		Route::resource('users', 'UserController', ['only' => ['update']]);
+		Route::resource('user', 'UserController', ['only' => ['update']]);
 
 	});
 
 	Route::group(['middleware' => ['permission:delete-user']], function () {
-		Route::resource('users', 'UserController', ['only' => ['destroy', 'store']]);
-
+		Route::resource('user', 'UserController', ['only' => ['destroy']]);
 	});
 
 	Route::resource('reply', 'ReplyController', ['only' => [

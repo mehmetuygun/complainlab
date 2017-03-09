@@ -5,7 +5,7 @@
     <div class="panel panel-default">
         <div class="panel-heading"><h4>Create User <small>Create a new user</small></h4></div>
             <div class="panel-body">
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('/app/users') }}">
+                <form class="form-horizontal" role="form" method="POST" action="{{ url('/app/user') }}">
                     {{ csrf_field() }}
 
                     <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">

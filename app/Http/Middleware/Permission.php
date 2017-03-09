@@ -29,7 +29,7 @@ class Permission
     public function handle($request, Closure $next, $permissions)
     {
         if ($this->auth->guest() || !$request->user()->can(explode('|', $permissions))) {
-            return redirect('/app')
+            return back()
                 ->with('alert_message', 'You do not have authorizaiton to take this action.')
                 ->with('alert_type', 'danger');
         }

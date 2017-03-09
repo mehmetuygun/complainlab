@@ -27,4 +27,9 @@ class Ticket extends Model
     {
         return $this->hasMany('App\Reply');
     }
+
+    public function assignedUser()
+    {
+        return $this->belongsTo('App\User', 'assigned_to', 'id');
+    }
 }

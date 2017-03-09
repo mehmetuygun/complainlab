@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/complainlab.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
     @yield('css')
 
     <!-- Scripts -->
@@ -45,8 +47,8 @@
                     @if (Auth::check())
                         <!-- Left Side Of Navbar -->
                         <ul class="nav navbar-nav">
-                             <li><a href="{{ url('/app/ticket') }}">Ticket</a></li>
-                             <li><a href="{{ url('/app/users') }}">Users</a></li>
+                             <li><a href="{{ url('/app/ticket') }}"><i class="fa fa-database" aria-hidden="true"></i> Ticket</a></li>
+                             <li><a href="{{ url('/app/user') }}"><i class="fa fa-user" aria-hidden="true"></i> User</a></li>
                         </ul>
                     @endif
 
@@ -59,17 +61,18 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
                                     {{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ url('/app/settings/account') }}">Settings</a></li>
+                                    <li><a href="{{ url('/app/account/profile') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Profile</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li>
                                         <a href="{{ url('/app/logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
+                                            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
                                         </a>
 
                                         <form id="logout-form" action="{{ url('/app/logout') }}" method="POST" style="display: none;">

@@ -33,4 +33,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Ticket', 'user_id', 'id');
     }
+
+    public function assignedTicket()
+    {
+        return $this->hasMany('App\Ticket', 'assigned_to', 'id');
+    }
 }

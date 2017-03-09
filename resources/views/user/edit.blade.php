@@ -2,10 +2,11 @@
 
 @section('content')
 <div class="container">
+    @include('alert/alert')
     <div class="panel panel-default">
         <div class="panel-heading">User <small>Edit a user</small></div>
             <div class="panel-body">
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('/app/users').'/'.$user->id }}">
+                <form class="form-horizontal" role="form" method="POST" action="{{ url('/app/user').'/'.$user->id }}">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
@@ -76,8 +77,6 @@
                                         </label>
                                     </div>
                                 @endif
-
-
                             @endforeach
 
                             @if ($errors->has('role'))
@@ -91,7 +90,7 @@
                     <div class="form-group">
                         <div class="col-md-6 col-md-offset-4">
                             <button type="submit" class="btn btn-primary">
-                                Save Changes
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i> Save Changes
                             </button>
                         </div>
                     </div>

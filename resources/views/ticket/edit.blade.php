@@ -79,15 +79,15 @@
                             {{-- <input id="status" type="text" class="form-control" name="status" value="{{ old('status') ? old('status') : Auth::user()->status }}" required autofocus> --}}
 
                             <select id="status_id" class="form-control" name="status_id">
-                            	@foreach ($statuss as $status)
+                                @foreach ($statuss as $status)
                                     @if (old('status_id') && old('status_id') == $status->id)
                                         <option value="{{ $status->id }}" selected="selected">{{ $status->name }}</option>
                                     @elseif ($ticket->status->id == $status->id)
                                         <option value="{{ $status->id }}" selected="selected">{{ $status->name }}</option>
                                     @else
-                            		    <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                        <option value="{{ $status->id }}">{{ $status->name }}</option>
                                     @endif
-                            	@endforeach
+                                @endforeach
                             </select>
 
                             @if ($errors->has('status_id'))
@@ -96,12 +96,36 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div>                    
 
+                    <div class="form-group{{ $errors->has('assigned_to') ? ' has-error' : '' }}">
+                        <label for="assigned_to" class="col-md-3 control-label">Assigned To</label>
+
+                        <div class="col-md-6">
+
+                            <select id="assigned_to" class="form-control" name="assigned_to">
+                                @foreach ($users as $user)
+                                    @if (old('assigned_to') && old('assigned_to') == $user->id)
+                                        <option value="{{ $user->id }}" selected="selected">{{ $user->first_name.' '.$user->last_name }}</option>
+                                    @elseif ($ticket->assigned_to == $user->id)
+                                        <option value="{{ $user->id }}" selected="selected">{{ $user->first_name.' '.$user->last_name }}</option>
+                                    @else
+                                        <option value="{{ $user->id }}">{{ $user->first_name.' '.$user->last_name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+
+                            @if ($errors->has('assigned_to'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('assigned_to') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save Changes</button>
                             <a href=" {{ URL::previous() }} " class="btn btn-default">Go Back</a>
                         </div>
                     </div>
@@ -114,6 +138,5 @@
 @endsection
 
 @section('script')
-	<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-  	<script>tinymce.init({ selector:'textarea' });</script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 @endsection

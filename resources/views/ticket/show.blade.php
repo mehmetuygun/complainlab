@@ -4,15 +4,22 @@
 {{ csrf_field() }}
 <div class="container">
 <div class="row">
-    <div class="col-md-8">
-        
+    <div class="col-md-9">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-user" aria-hidden="true"></i>
                 <strong>{{ $ticket->user->first_name .' '. $ticket->user->last_name }}</strong>
                 <i class="fa fa-clock-o" aria-hidden="true"></i>
                 {{ $ticket->created_at }}
-
+                <div class="btn-group pull-right panel-heading-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-cog" aria-hidden="true"></i> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="fa fa-edit" aria-hidden="true"></i>  Edit</a></li>
+                        <li><a href="#"><i class="fa fa-remove" aria-hidden="true"></i>  Delete</a></li>
+                    </ul>
+                </div>             
             </div>        
             <div class="panel-body">
                 <i class="fa fa-comment-o" aria-hidden="true"></i>
@@ -21,24 +28,7 @@
                 {!! $ticket->description !!}
             </div>
         </div>
-
-        @foreach ($ticket->replies as $reply)
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <strong>{{ $reply->ticket->user->first_name .' '. $reply->ticket->user->last_name }}</strong>
-                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                    {{ $reply->created_at }}
-                </div>        
-                <div class="panel-body">
-                    {!! $reply->description !!}
-                </div>
-            </div>
-        @endforeach
-
-        <div id="replied"></div>
-
-        <div class="panel panel-info">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-user" aria-hidden="true"></i>
                 <strong>{{ Auth::user()->first_name .' '. Auth::user()->last_name }}</strong>
@@ -47,8 +37,26 @@
                 <textarea class="form-control" id="enter_to_reply" placeholder="Enter to reply." rows="1"></textarea>
             </div>
         </div>
+
+        @foreach ($ticket->replies as $reply)
+            <div class="panel panel-default">
+{{--                 <div class="panel-heading">
+                </div>         --}}
+                <div class="panel-body">
+                    {{-- <i class="fa fa-user" aria-hidden="true"></i> --}}
+                    <strong>{{ $reply->ticket->user->first_name .' '. $reply->ticket->user->last_name }}</strong> Replied
+{{--                     <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    {{ $reply->created_at }} --}}
+                    <hr class="reply-hr">
+                    {!! $reply->description !!}
+                </div>
+            </div>
+        @endforeach
+
+        <div id="replied"></div>
+
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="panel panel-default">
             <div class="panel-heading">
                 Details
@@ -58,8 +66,8 @@
 
 <form class="form-horizontal">
   <div class="form-group">
-    <label class="col-sm-2 control-label">Status</label>
-    <div class="col-sm-10">
+    <label class="col-sm-4 control-label">Status</label>
+    <div class="col-sm-8">
       <p class="form-control-static">
                           @if ($ticket->status->name == 'Open')
                     <span class="label label-success">Open</span>
@@ -71,8 +79,8 @@
   </div>  
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">Priority</label>
-    <div class="col-sm-10">
+    <label class="col-sm-4 control-label">Priority</label>
+    <div class="col-sm-8">
       <p class="form-control-static">
                 @if ($ticket->priority->name == 'low')
                     <span class="label label-success">Low</span>
@@ -112,10 +120,10 @@
 
         //show reply editor when textbox is clicked
         $( "#enter_to_reply" ).click(function() {
-            tinymce.init({ selector:'textarea', menubar:false, themes: "modern" });
+            tinymce.init({ selector:'textarea', menubar:false, themes: "inlite" });
             var buttons = '<div class="buttons-reply">';
-            buttons += '<button class="btn btn-primary btn-sm" id="reply" type="button">Reply</button>';
-            buttons += '<button class="btn btn-default btn-sm" id="reply_cancel" type="button">Cancel</button>';
+            buttons += '<button class="btn btn-default btn-md pull-right" id="reply_cancel" type="button">Cancel</button>';
+            buttons += '<button class="btn btn-success btn-md pull-right" id="reply" type="button">Reply</button>';
             buttons += '</div>';
             $( "#reply_body" ).append(buttons);
         });
