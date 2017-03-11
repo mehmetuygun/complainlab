@@ -6,11 +6,25 @@
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
             <a href="{{ url('app') }}">Dashboard</a> / Ticket
-            <a href="{{ url('/app/ticket/create') }}" class="btn btn-success btn-sm panel-heading-btn pull-right"><i class="fa fa-plus" aria-hidden="true"></i> Create New Ticket</a></h5>
+            <a href="{{ url('/app/ticket/create') }}" class="btn btn-success btn-sm panel-heading-btn pull-right"><i class="fa fa-plus" aria-hidden="true"></i> Create New Ticket</a>
         </div>
         <div class="panel-body">
+            <div class="btn-group pull-right" data-toggle="buttons">
+              <label class="btn btn-default active btn-z">
+                <input type="radio" name="options" id="option1 toggle" autocomplete="off" checked value="all"> All
+              </label>
+              <label class="btn btn-default btn-z">
+                <input type="radio" name="options" id="option2 toggle" autocomplete="off" value="open"> Open
+              </label>
+              <label class="btn btn-default btn-z">
+                <input type="radio" name="options" id="option3 toggle" autocomplete="off" value="close"> Closed
+              </label>
+              <label class="btn btn-default btn-z">
+                <input type="radio" name="options" id="option4 toggle" autocomplete="off" value="assigned"> Assigned
+              </label>
+            </div>
             {{ csrf_field() }}
-            <table class="table table-condensed table-striped" id="dataTable">
+            <table class="table" id="dataTable">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -57,6 +71,7 @@
 @endsection
 
 @section('script')
+    {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script> --}}
     <script type="text/javascript" src="{{ url('js/jquery.dataTables.min.js') }}"></script>
     <script type="text/javascript" src="{{ url('js/dataTables.bootstrap.min.js') }}"></script>
     <script type="text/javascript">
@@ -68,8 +83,16 @@
                 }
             });
 
+            var list = "all";
+
+            $(".btn-z").on("click", function(){
+               list = $(this).find("input[name=options]").val();
+            });
+
+            function getList() {return list}
+
             //load ticket table 
-            $('#dataTable').DataTable(
+            var table = $('#dataTable').DataTable(
                 {   
                     "paging": true,
                     "ordering":   false,
@@ -78,7 +101,10 @@
                     "serverSide": true,
                     "ajax": {
                         "url": "{{ url('app/ticket/getDataTable') }}",
-                        "type": "POST"
+                        "type": "POST",
+                        "data": function (d) { 
+                            d.list = getList();
+                        },
                     },
                     "columns": [
                         { "data": "id" },
@@ -98,6 +124,10 @@
                     ]
                 }
             );
+
+            $(".btn-z").on("click", function(){
+                table.ajax.reload();
+            });
 
             //set selected ticket id for modal usage
             $(document).on('click', '#deleteModal', function() {
@@ -131,7 +161,6 @@
                     }
                 });
             });
-
         });
     </script>
 @endsection

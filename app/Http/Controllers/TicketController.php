@@ -139,10 +139,49 @@ class TicketController extends Controller
     {
         $data = array();
 
-        $tickets = Ticket::orderBy('created_at', 'desc')
-                            ->skip($request->input('start'))
-                            ->take($request->input('length'))
-                            ->get();
+        $count = 0;
+
+        if ($request->input('list') == 'all') {
+            $tickets = Ticket::orderBy('created_at', 'desc')
+                                ->skip($request->input('start'))
+                                ->take($request->input('length'))
+                                ->get();
+
+            $count = Ticket::count();
+        } elseif ($request->input('list') == 'open') {
+            $tickets = Ticket::whereHas('status', function ($query) {
+                                    $query->where('name', '=', 'Open');
+                                })->orderBy('created_at', 'desc')
+                                ->skip($request->input('start'))
+                                ->take($request->input('length'))
+                                ->get();
+
+            $count = Ticket::whereHas('status', function ($query) {
+                                    $query->where('name', '=', 'Open');
+                                })->count();
+        } elseif ($request->input('list') == 'close') {
+            $tickets = Ticket::whereHas('status', function ($query) {
+                                    $query->where('name', '=', 'Close');
+                                })->orderBy('created_at', 'desc')
+                                ->skip($request->input('start'))
+                                ->take($request->input('length'))
+                                ->get();
+
+            $count = Ticket::whereHas('status', function ($query) {
+                                    $query->where('name', '=', 'Close');
+                                })->count();                   
+        } elseif ($request->input('list') == 'assigned') {
+            $tickets = Ticket::whereHas('assignedUser', function ($query) {
+                                    $query->where('id', '=', Auth::user()->id);
+                                })->orderBy('created_at', 'desc')
+                                ->skip($request->input('start'))
+                                ->take($request->input('length'))
+                                ->get();
+
+            $count = Ticket::whereHas('assignedUser', function ($query) {
+                                    $query->where('id', '=', Auth::user()->id);
+                                })->count();
+        }
 
         foreach ($tickets as $ticket) {
             $data[] = [
@@ -159,8 +198,8 @@ class TicketController extends Controller
         return response()
             ->json([
                 "draw" => $request->input('draw'),
-                "recordsTotal"=> Ticket::count(),
-                "recordsFiltered"=> Ticket::count(),
+                "recordsTotal"=> $count,
+                "recordsFiltered"=> $count,
                 'data' => $data
             ]);
     }
