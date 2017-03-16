@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    <ticket :message="message"></ticket>
     @include('alert/alert')
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
@@ -10,16 +11,16 @@
         </div>
         <div class="panel-body">
             <div class="btn-group pull-right" data-toggle="buttons">
-              <label class="btn btn-default active btn-z">
+              <label class="btn btn-default active btn-z" v-on:click="selectOption('all')">
                 <input type="radio" name="options" id="option1 toggle" autocomplete="off" checked value="all"> All
               </label>
-              <label class="btn btn-default btn-z">
+              <label class="btn btn-default btn-z" v-on:click="selectOption('open')">
                 <input type="radio" name="options" id="option2 toggle" autocomplete="off" value="open"> Open
               </label>
-              <label class="btn btn-default btn-z">
+              <label class="btn btn-default btn-z" v-on:click="selectOption('close')">
                 <input type="radio" name="options" id="option3 toggle" autocomplete="off" value="close"> Closed
               </label>
-              <label class="btn btn-default btn-z">
+              <label class="btn btn-default btn-z" v-on:click="selectOption('assigned')">
                 <input type="radio" name="options" id="option4 toggle" autocomplete="off" value="assigned"> Assigned
               </label>
             </div>
@@ -43,6 +44,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
